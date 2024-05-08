@@ -28,7 +28,15 @@ class App extends Component {
     console.log('PRODUCT')
     console.log(product)
     if (cartItemPresent.length > 0) {
-      this.incrementCartItemQuantity(cartItemPresent[0])
+      this.setState(prevState => ({
+        cartList: prevState.cartList.map(eachCartItem => {
+          if (cartItemPresent[0].id === eachCartItem.id) {
+            const updatedQuantity = eachCartItem.quantity + product.quantity
+            return {...eachCartItem, quantity: updatedQuantity}
+          }
+          return eachCartItem
+        }),
+      }))
     } else {
       this.setState(prevState => ({cartList: [...prevState.cartList, product]}))
       //   TODO: Update the code here to implement addCartItem
